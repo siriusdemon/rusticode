@@ -1,0 +1,11 @@
+[package]
+name = "leetcode"
+version = "0.1.0"
+authors = ["siriusdemon <mory2016@126.com>"]
+edition = "2018"
+
+[dependencies]
+libc = "0.2.59"
+
+[build-dependencies]
+cc = "1.0.37"
