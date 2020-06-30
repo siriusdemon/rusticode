@@ -341,6 +341,22 @@ pub fn path_sum(root: Option<Rc<RefCell<TreeNode>>>, sum: i32) -> Vec<Vec<i32>> 
     return res;
 }
 
+// https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/
+pub fn min_depth(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
+    match root {
+        None => 0,
+        Some(node) => {
+            let mut node = node.borrow_mut();
+            let ld = min_depth(node.left.take());
+            let rd = min_depth(node.right.take());
+            if ld > 0 && rd > 0 {
+                return 1 + ld.min(rd);
+            } else {
+                return 1 + ld + rd;
+            }
+        }
+    }
+}
 
 fn main()
 {
