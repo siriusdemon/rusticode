@@ -324,6 +324,28 @@ pub fn word_break(s: String, word_dict: Vec<String>) -> bool {
     dp[len] 
 }
 
+// https://leetcode-cn.com/problems/maximum-length-of-repeated-subarray/solution/
+// 相当于填表
+pub fn find_length(a: Vec<i32>, b: Vec<i32>) -> i32 {
+    let row = a.len();
+    let col = b.len();
+    let mut dp = vec![vec![0; col]; row]; 
+    let mut res = 0;
+
+    for i in 0..row {
+        for j in 0..col {
+            if a[i] == b[j] {
+                let last = if ( i == 0 || j == 0 ) { 0 } else { dp[i-1][j-1] };
+                dp[i][j] = last + 1;
+                res = res.max(dp[i][j]);
+            } else {
+                dp[i][j] = 0;
+            }
+        }
+    }
+    return res as i32;
+}
+
 fn main()
 {
     // generate_parenthesis(4);
@@ -335,5 +357,6 @@ fn main()
     // max_product([-2,0,-1].to_vec());
     // max_product([-1,-2,-9,-6].to_vec());
     // max_profit([1,2,3].to_vec());
-    word_break("leetcode".to_string(), ["leet".to_string(), "code".to_string()].to_vec());
+    // word_break("leetcode".to_string(), ["leet".to_string(), "code".to_string()].to_vec());
+    dbg!(find_length([1,2,3,2,1].to_vec(), [3,2,1,4,7].to_vec()));
 }
