@@ -122,6 +122,10 @@ fn find_medium_in_two_ordered_array(array1: &[i32], len1: usize, array2: &[i32],
     }
 }
 
+// https://leetcode-cn.com/problems/kth-smallest-element-in-a-sorted-matrix/
+pub fn kth_smallest(matrix: Vec<Vec<i32>>, k: i32) -> i32 {
+    42
+}
 
 fn main() {
     let mut array = [31, -5, 11, 4, 2, 0, 12, -2, 13, 1, 21];

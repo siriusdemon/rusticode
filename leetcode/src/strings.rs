@@ -72,9 +72,49 @@ pub fn convert(s: String, num_rows: i32) -> String {
 }
 
 // https://leetcode-cn.com/problems/valid-number/solution/
+// 好理解但是半吊子的自动状态机，无法解析`.`这种特殊例子
 pub fn is_number(s: String) -> bool {
-    true
+    // 先用正则表达式写一遍，五种类型 + 1 非法类型，九种状态
+    // 0 blank = " "
+    // 1 sign = "[+-]"
+    // 2 num = "[0-9]"
+    // 3 point = '\.'
+    // 4 exp = 'e'
+    // 5 invalid
+    //          0      1    2     3     4    5     6    7     8
+    // full = blank* sign? num* point? num+ exp? sign? num+ blank*
+    // 定义9个状态，进入一种状态之中，下一个状态就显现了。如果下一个状态不正确，就退出
+    // 以空白串开始，第一个字符可以是什么呢？可以是空白，数字，符号。
+    let table = [
+        // B   S   N   P   E   I
+        [  0,  1,  2,  4, -1, -1], // 空白，首空白，下一个合法类型是空白，符号，数字，小数点
+        [ -1, -1,  2,  3, -1, -1], // sign? 首符号，下一个合法类型是数字，小数点
+        [  8, -1,  2,  3,  5, -1], // num* 符号后的数字，合法类型是数学，小数点，e/E，结尾空白
+        [  8, -1,  4, -1,  5, -1], // point? 小数点，合法类型是数字，e/E，结尾空白
+        [  8, -1,  4, -1,  5, -1], // num+ 小数点后的数字，合法类型是数字，e/E，结尾空白
+        [ -1,  6,  7, -1, -1, -1], // exp? 幂，合法类型是 符号，数字
+        [ -1, -1,  7, -1, -1, -1], // sign? 符号，合法类型是数字
+        [  8, -1,  7, -1, -1, -1], // num+ 数字，合法类型是数字，结尾空白
+        [  8, -1, -1, -1, -1, -1], // blank* 结尾空白，合法类型是空白
+    ];
+    let mut state: i32 = 0;
+    let mut jump = &table[state as usize];
+    for c in s.chars() {
+        let index = match c {
+            ' ' => 0,
+            '+' | '-' => 1,
+            '0'..='9' => 2,
+            '.' => 3,
+            'e' | 'E' => 4,
+            _ => 5,
+        };
+        state = jump[index];
+        if state == -1 { break; }
+        jump = &table[state as usize];
+    }
+    return state == 2 || state == 3 || state == 4 || state == 7 || state == 8;
 }
+
 
 // what should be a number?
 fn digit_transfer(chars: &Vec<char>, next: usize) -> bool {
@@ -263,7 +303,17 @@ fn main()
     // println!("result {}", res);
     // let s = "Leetcode".to_string();
     // println!("{}", convert(s, 2));
-    // is_number("123".to_string());
+    dbg!(is_number("123".to_string()));
+    dbg!(is_number("12e3".to_string()));
+    dbg!(is_number("123e".to_string()));
+    dbg!(is_number("-123e4".to_string()));
+    dbg!(is_number("12.3e1".to_string()));
+    dbg!(is_number("123e  ".to_string()));
+    dbg!(is_number("-1E-6".to_string()));
+    dbg!(is_number("3.".to_string()));
+    dbg!(is_number(".1e6".to_string()));
+    dbg!(is_number(".1".to_string()));
+    dbg!(is_number(".".to_string()));
     // replace_spaces("mory love jenny    x".to_string(), 15);
     // dbg!(replace_space2("".to_string()));
     // dbg!(first_uniq_char("abcdkefd".to_string()));
@@ -274,6 +324,6 @@ fn main()
     // dbg!(is_palindrome("A man, a plan, a canal: Panama".to_string()));
     // dbg!(is_palindrome(",;".to_string()));
     // dbg!(is_palindrome("0P".to_string()));
-    dbg!(is_palindrome("`l;`` 1o1 ??;l`".to_string()));
+    // dbg!(is_palindrome("`l;`` 1o1 ??;l`".to_string()));
     
 }
