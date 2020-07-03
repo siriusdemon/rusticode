@@ -358,6 +358,21 @@ pub fn min_depth(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
     }
 }
 
+// https://leetcode-cn.com/problems/convert-sorted-array-to-binary-search-tree/
+pub fn sorted_array_to_bst(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
+    fn helper(nums: &Vec<i32>, p: usize, q:usize) -> Option<Rc<RefCell<TreeNode>>> {
+        if p == q { return None; }
+        let m = (q + p) / 2;
+        let mut root = TreeNode::new(nums[m]); 
+        let left = helper(nums, p, m);
+        let right = helper(nums, m+1, q);
+        root.left = left;
+        root.right = right;
+        return Some(Rc::new(RefCell::new(root)));
+    }    
+    return helper(&nums, 0, nums.len());
+}
+
 fn main()
 {
     let tree = Some(Rc::new(RefCell::new(TreeNode::new(4))));
