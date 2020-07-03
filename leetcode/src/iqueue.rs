@@ -100,6 +100,66 @@ impl CQueue {
  * let ret_2: i32 = obj.delete_head();
  */
 
+// https://leetcode-cn.com/problems/dui-lie-de-zui-da-zhi-lcof/
+// 可以支持 取最大值 一直都是 O(1)
+use std::collections::VecDeque;
+struct MaxQueue {
+    data: VecDeque<i32>,
+    maxq: VecDeque<i32>,
+}
+
+
+/**
+ * `&self` means the method takes an immutable reference.
+ * If you need a mutable reference, change it to `&mut self` instead.
+ */
+impl MaxQueue {
+
+    fn new() -> Self {
+        Self { data: VecDeque::new(), maxq: VecDeque::new()}
+    }
+    
+    fn max_value(&self) -> i32 {
+        if self.maxq.len() > 0 {
+            return self.maxq[0];
+        } else {
+            return -1;
+        }
+    }
+
+    #[inline]
+    fn top(&self) -> i32 {
+        return self.maxq[self.maxq.len()-1];
+    }
+    
+    fn push_back(&mut self, value: i32) {
+        self.data.push_back(value);
+        while self.maxq.len() > 0 && self.top() < value {
+            self.maxq.pop_back();
+        }
+        self.maxq.push_back(value);
+    }
+    
+    fn pop_front(&mut self) -> i32 {
+        if self.data.len() > 0 {
+            let v = self.data.pop_front().unwrap();
+            if v == self.maxq[0] {
+                self.maxq.pop_front();
+            }
+            return v;
+        } else {
+            return -1;
+        }
+    }
+}
+
+/**
+ * Your MaxQueue object will be instantiated and called as such:
+ * let obj = MaxQueue::new();
+ * let ret_1: i32 = obj.max_value();
+ * obj.push_back(value);
+ * let ret_3: i32 = obj.pop_front();
+ */
 
 fn main()
 {
@@ -118,5 +178,13 @@ fn main()
     let mut p = q.squeeze();
     println!("true data len {}", p.data.len());
     // println!("true data len {}", q.data.len());
+    let mut maxq = MaxQueue::new();
+    maxq.push_back(3);
+    maxq.push_back(31);
+    maxq.push_back(13);
+    maxq.pop_front();
+    maxq.pop_front();
+    maxq.pop_front();
+    maxq.pop_front();
 }
 
