@@ -294,6 +294,29 @@ pub fn is_palindrome(s: String) -> bool {
     return true;
 }
 
+// https://leetcode-cn.com/problems/compress-string-lcci/
+pub fn compress_string(s: String) -> String {
+    let mut res = String::new();
+    let mut last = ' ';
+    let mut n = 0;
+    for c in s.chars() {
+        if c == last {
+            n += 1;
+        } else {
+            if n > 0 {
+                let ss = format!("{}{}", last, n);
+                res.push_str(ss.as_str());
+            }
+            last = c;
+            n = 1;
+        }
+    }
+    if n > 0 {
+        let ss = format!("{}{}", last, n);
+        res.push_str(ss.as_str());
+    }
+    return res;
+}
 
 fn main()
 {
@@ -303,17 +326,17 @@ fn main()
     // println!("result {}", res);
     // let s = "Leetcode".to_string();
     // println!("{}", convert(s, 2));
-    dbg!(is_number("123".to_string()));
-    dbg!(is_number("12e3".to_string()));
-    dbg!(is_number("123e".to_string()));
-    dbg!(is_number("-123e4".to_string()));
-    dbg!(is_number("12.3e1".to_string()));
-    dbg!(is_number("123e  ".to_string()));
-    dbg!(is_number("-1E-6".to_string()));
-    dbg!(is_number("3.".to_string()));
-    dbg!(is_number(".1e6".to_string()));
-    dbg!(is_number(".1".to_string()));
-    dbg!(is_number(".".to_string()));
+    // dbg!(is_number("123".to_string()));
+    // dbg!(is_number("12e3".to_string()));
+    // dbg!(is_number("123e".to_string()));
+    // dbg!(is_number("-123e4".to_string()));
+    // dbg!(is_number("12.3e1".to_string()));
+    // dbg!(is_number("123e  ".to_string()));
+    // dbg!(is_number("-1E-6".to_string()));
+    // dbg!(is_number("3.".to_string()));
+    // dbg!(is_number(".1e6".to_string()));
+    // dbg!(is_number(".1".to_string()));
+    // dbg!(is_number(".".to_string()));
     // replace_spaces("mory love jenny    x".to_string(), 15);
     // dbg!(replace_space2("".to_string()));
     // dbg!(first_uniq_char("abcdkefd".to_string()));
@@ -325,5 +348,5 @@ fn main()
     // dbg!(is_palindrome(",;".to_string()));
     // dbg!(is_palindrome("0P".to_string()));
     // dbg!(is_palindrome("`l;`` 1o1 ??;l`".to_string()));
-    
+    dbg!(compress_string("abbbcaa".to_string()));
 }
