@@ -224,7 +224,7 @@ pub fn unique_paths_iter(m: i32, n: i32) -> i32 {
 }
 
 // https://leetcode-cn.com/problems/unique-paths-ii/solution/
-pub fn unique_paths_with_obstacles(obstacle_grid: Vec<Vec<i32>>) -> i32 {
+pub fn unique_paths_with_obstacles2(obstacle_grid: Vec<Vec<i32>>) -> i32 {
     let m = obstacle_grid.len();
     let n = obstacle_grid[0].len();    
 
@@ -344,6 +344,34 @@ pub fn find_length(a: Vec<i32>, b: Vec<i32>) -> i32 {
         }
     }
     return res as i32;
+}
+
+// https://leetcode-cn.com/problems/unique-paths-ii/
+pub fn unique_paths_with_obstacles(obstacle_grid: Vec<Vec<i32>>) -> i32 {
+    let row = obstacle_grid.len();
+    let col = obstacle_grid[0].len();
+    let mut dp = vec![vec![0; col]; row];
+
+    // init first row and col
+    for i in 0..row {
+        for j in 0..col {
+            if obstacle_grid[i][j] == 0 {
+                if i == 0 && j == 0 {
+                    dp[i][j] = 1;
+                } else if i == 0 {
+                    dp[i][j] = dp[i][j-1];
+                } else if j == 0 {
+                    dp[i][j] = dp[i-1][j];
+                } else {
+                    dp[i][j] = dp[i-1][j] + dp[i][j-1];
+                }
+            } else {
+                // 遇到障碍了，但一开始我们就是初始化为0的，所以这里其实可以不写
+                dp[i][j] = 0;
+            }
+        }
+    }
+    return dp[row-1][col-1];
 }
 
 fn main()
