@@ -21,10 +21,7 @@ impl MedianFinder {
     
     fn add_num(&mut self, num: i32) {
         self.maxheap.push(num);
-        if self.maxheap.len() > self.minheap.len() {
-            let max = self.maxheap.pop().unwrap();
-            self.minheap.push(max);
-        }
+        
     }
     
     fn find_median(&self) -> f64 {
