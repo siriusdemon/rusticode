@@ -1,21 +1,37 @@
-pub fn nth_ugly_number(n: i32) -> i32 {
-    let (mut p2, mut p3, mut p5) = (0, 0, 0);
-    let mut cache: Vec<i32> = vec![1];
-    let mut res = 1;
-    for _ in 1..n {
-        if cache[p2] * 2 == res { p2 += 1; }  // 重复的检查与指针的移动
-        if cache[p3] * 3 == res { p3 += 1; }
-        if cache[p5] * 5 == res { p5 += 1; }
-        res = (2 * cache[p2]).min(3 * cache[p3]).min(5 * cache[p5]);
-        cache.push(res);
-    }
-    return res;
+// https://leetcode-cn.com/problems/shu-ju-liu-zhong-de-zhong-wei-shu-lcof/solution/
+struct MedianFinder {
+
 }
+
+
+/**
+ * `&self` means the method takes an immutable reference.
+ * If you need a mutable reference, change it to `&mut self` instead.
+ */
+impl MedianFinder {
+
+    /** initialize your data structure here. */
+    fn new() -> Self {
+
+    }
+    
+    fn add_num(&self, num: i32) {
+
+    }
+    
+    fn find_median(&self) -> f64 {
+
+    }
+}
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * let obj = MedianFinder::new();
+ * obj.add_num(num);
+ * let ret_2: f64 = obj.find_median();
+ */
+
 
 fn main()
 {
-    let n = 11;
-    for i in 0..20 {
-        println!("{}th ugly number {}", i+1, nth_ugly_number(i+1));
-    }
 }
