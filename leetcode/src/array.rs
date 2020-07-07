@@ -355,6 +355,12 @@ pub fn exist(board: Vec<Vec<char>>, word: String) -> bool {
     true
 }
 
+
+// https://leetcode-cn.com/problems/shu-zu-zhong-de-ni-xu-dui-lcof/comments/
+pub fn reverse_pairs(nums: Vec<i32>) -> i32 {
+
+}
+
 fn main()
 {
     // dbg!(majority_element([1].to_vec()));

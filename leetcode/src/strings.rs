@@ -318,6 +318,27 @@ pub fn compress_string(s: String) -> String {
     return res;
 }
 
+// https://leetcode-cn.com/problems/ba-shu-zu-pai-cheng-zui-xiao-de-shu-lcof/
+// 本质上是字符器排序
+// pub fn min_number(nums: Vec<i32>) -> String {
+//     let mut strs = Vec::new();
+//     for n in nums {
+//         strs.push(format!("{}", n));
+//     }
+//     let sortfn = |a: &String, b: &String| {
+//         let ab = format!("{}{}", a, b);
+//         let ba = format!("{}{}", b, a);
+//         return ab > ba;
+//     };
+//     strs.sort_by(sortfn);
+//     let mut res = String::new();
+//     for s in strs {
+//         res.push_str(s.as_str());
+//     } 
+//     return res;
+// }
+
+
 fn main()
 {
     // let s1 = "6913259244".to_string();
@@ -348,5 +369,6 @@ fn main()
     // dbg!(is_palindrome(",;".to_string()));
     // dbg!(is_palindrome("0P".to_string()));
     // dbg!(is_palindrome("`l;`` 1o1 ??;l`".to_string()));
-    dbg!(compress_string("abbbcaa".to_string()));
+    // dbg!(compress_string("abbbcaa".to_string()));
+    dbg!(min_number([1,2,3,4].to_vec()));
 }
