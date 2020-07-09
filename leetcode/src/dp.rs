@@ -374,6 +374,13 @@ pub fn unique_paths_with_obstacles(obstacle_grid: Vec<Vec<i32>>) -> i32 {
     return dp[row-1][col-1];
 }
 
+
+// https://leetcode-cn.com/problems/re-space-lcci/
+pub fn respace(dictionary: Vec<String>, sentence: String) -> i32 {
+    42
+}
+
+
 fn main()
 {
     // generate_parenthesis(4);
