@@ -392,8 +392,21 @@ pub fn sorted_array_to_bst(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
     return helper(&nums, 0, nums.len());
 }
 
+// https://leetcode-cn.com/problems/invert-binary-tree/
 pub fn invert_tree(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
-
+    match root {
+        None => root,
+        Some(mut node) => {
+            {
+                let mut node = node.borrow_mut();
+                let left = invert_tree(node.left.take());
+                let right = invert_tree(node.right.take());
+                node.right = left;
+                node.left = right;
+            } 
+           return Some(node);
+        }
+    }
 }
 
 fn main()
@@ -425,5 +438,6 @@ fn main()
     // dbg!(build_tree([1,2,3].to_vec(), [3,2,1].to_vec()));
     // build_tree([1,2,3].to_vec(), [2,3, 1].to_vec());
     // [4, 6, 7, 5]
-    verify_postorder([4,6,7,5].to_vec());
+    // verify_postorder([4,6,7,5].to_vec());
+    dbg!(invert_tree(tree));
 }
