@@ -60,6 +60,36 @@ pub fn solve_n_queens(n: i32) -> Vec<Vec<String>> {
     return formater(n, res);
 }
 
+// https://leetcode-cn.com/problems/n-queens-ii/
+pub fn total_n_queens(n: i32) -> i32 {
+    fn solver(n: usize, queens: Vec<usize>, res: &mut i32) {
+        let k = queens.len();
+        let mut row = vec![0; n];
+        for (i, &j) in queens.iter().enumerate() {
+            row[j] = 1;
+            let d = k - i;
+            if j >= d { row[j-d] = 1; }
+            if (j + d) < n { row[j+d] = 1; }
+        }
+        for (i, &r) in row.iter().enumerate() {
+            if r == 0 {
+                let mut new_queens = queens.clone();
+                new_queens.push(i);
+                if new_queens.len() == n {
+                    *res += 1
+                } else {
+                    solver(n, new_queens, res);
+                }
+            }
+        }
+    } 
+    let n = n as usize;
+    let queens = vec![];
+    let mut res = 0;
+    solver(n, queens, &mut res);
+    return res;
+}
+
 fn main()
 {
     let results = solve_n_queens(4);
@@ -69,4 +99,6 @@ fn main()
             println!("{:?}", row);
         }
     }
+    let res = total_n_queens(4);
+    println!("total: {}", res);
 }

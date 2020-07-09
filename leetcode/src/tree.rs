@@ -392,6 +392,10 @@ pub fn sorted_array_to_bst(nums: Vec<i32>) -> Option<Rc<RefCell<TreeNode>>> {
     return helper(&nums, 0, nums.len());
 }
 
+pub fn invert_tree(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
+
+}
+
 fn main()
 {
     let tree = Some(Rc::new(RefCell::new(TreeNode::new(4))));
