@@ -57,6 +57,31 @@ pub fn max_profit_infinite(prices: Vec<i32>) -> i32 {
     return s_empty;
 }
 
+// https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/solution/zhuang-tai-ji-mo-xing-dp-by-acw_wangdh15/
+// 用有限状态机的方式去解题
+use std::i32;
+pub fn max_profit_cool(prices: Vec<i32>) -> i32 {
+    let n = prices.len();
+    let mut dp = vec![vec![i32::MIN; 3]; n+1];
+    // 0 可以买入的状态，买入之后转移到状态1。可以原地保持状态，或者从冷冻态转过来
+    // 1 可以卖出的状态，卖出之后转移到状态2。可以原地保持状态，或者从状态0转过来
+    // 2 冷冻期，过了一天转入状态0。可以从状态1转过来。
+
+    // 0 明天可买入，要么今天不买，要么今天是冷冻期
+    // 1 明天可卖出：要么今天买，要么今天不卖
+    // 2 明天是冷冻，那就今天卖了吧
+    dp[0][0] = 0;
+    for i in 0..n {
+        dp[i+1][0] = dp[i][0].max(dp[i][2]); // 来自 0 和 2 的转移
+        dp[i+1][1] = dp[i][1].max(dp[i][0] - prices[i]);
+        dp[i+1][2] = dp[i][1] + prices[i]; 
+        // println!("dp[i][0]: {}", dp[i][0]);
+        // println!("dp[i][1]: {}", dp[i][1]);
+        // println!("dp[i][2]: {}", dp[i][2]);
+    }    
+    return dp[n][0].max(dp[n][2]);
+}
+
 pub fn max_profit_once(prices: Vec<i32>) -> i32 {
     // suffix 0 means no trade (buy or sell) happen
     // 1 means it happend
@@ -380,6 +405,25 @@ pub fn respace(dictionary: Vec<String>, sentence: String) -> i32 {
     42
 }
 
+// https://leetcode-cn.com/problems/li-wu-de-zui-da-jie-zhi-lcof/
+pub fn max_value(mut grid: Vec<Vec<i32>>) -> i32 {
+    let row = grid.len();
+    let col = grid[0].len();
+    for i in 0..row {
+        for j in 0..col {
+            if i == 0 && j == 0 {
+                // pass
+            } else if i == 0 {
+                grid[i][j] += grid[i][j-1];
+            } else if j == 0 {
+                grid[i][j] += grid[i-1][j];
+            } else {
+                grid[i][j] += grid[i-1][j].max(grid[i][j-1]);
+            }
+        }
+    }
+    return grid[row-1][col-1];
+}
 
 fn main()
 {
@@ -393,5 +437,6 @@ fn main()
     // max_product([-1,-2,-9,-6].to_vec());
     // max_profit([1,2,3].to_vec());
     // word_break("leetcode".to_string(), ["leet".to_string(), "code".to_string()].to_vec());
-    dbg!(find_length([1,2,3,2,1].to_vec(), [3,2,1,4,7].to_vec()));
+    // dbg!(find_length([1,2,3,2,1].to_vec(), [3,2,1,4,7].to_vec()));
+    dbg!(max_profit_cool([1,2,3,0,2].to_vec()));
 }
