@@ -358,7 +358,28 @@ pub fn exist(board: Vec<Vec<char>>, word: String) -> bool {
 
 // https://leetcode-cn.com/problems/shu-zu-zhong-de-ni-xu-dui-lcof/comments/
 pub fn reverse_pairs(nums: Vec<i32>) -> i32 {
+    32
+}
 
+// https://leetcode-cn.com/problems/rotate-matrix-lcci/comments/
+pub fn rotate2(matrix: &mut Vec<Vec<i32>>) {
+    let row = matrix.len();
+    let col = matrix[0].len();
+
+    for i in 0..row {
+        for j in i+1..col {
+            let t = matrix[i][j];
+            matrix[i][j] = matrix[j][i];
+            matrix[j][i] = t;
+        }
+    }
+    for i in 0..row {
+        for k in 0..col/2 {
+            let t = matrix[i][k];
+            matrix[i][k] = matrix[i][col-k-1];
+            matrix[i][col-k-1] = t;
+        }    
+    }
 }
 
 fn main()
@@ -382,5 +403,11 @@ fn main()
     // dbg!(is_straight([1,0,3,0,5].to_vec()));
     // dbg!(is_straight([1,2,3,4,6].to_vec()));
     // dbg!(is_straight([0,0,2,2,5].to_vec()));
-    three_sum_closest([3,4,5,6,7,2,3,4,5,7].to_vec(), 3);
+    // three_sum_closest([3,4,5,6,7,2,3,4,5,7].to_vec(), 3);
+    let mut matrix = vec![
+        [1,2,3].to_vec(),
+        [4,5,6].to_vec(),
+        [7,8,9].to_vec(),
+    ];
+    rotate2(&mut matrix);
 }
