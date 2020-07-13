@@ -409,6 +409,45 @@ pub fn invert_tree(root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<Tre
     }
 }
 
+// https://leetcode-cn.com/problems/er-cha-shu-ren-wu-diao-du/
+// 任务树，先串行，后并行。是最优的。
+// 现有左右子树，左树的任务时间和为 a， 最大并行时间为 b 
+// 右树的为 c，d
+// 左右的任务时间为 a + c，根任务的时间为 val
+// 根树的最大并行时间，应该是左右子树都能并行时取到，则为 (a + c) / 2，但不一定取到。取到的条件是一直并行！
+// 但不失一般化，设 a >= c，左树总是比右树久一些。那么应该让左树先走一段，剩下的时间与 c 等，此时再左右并行
+// 左树走多久？因为左树的最大并行时间为 b，先并行一下看看， 于是剩 a - 2b
+// 现在有两个要讨论的，a - 2b == c，则完美并行。此时并行时间是 (a + c) / 2
+// a - 2b < c，这可以通过缩小左树并行计算的时候，剩余 c 的工作量，于是回到上式，并行时间是 （a + c) / 2
+// a - 2b > c，如此，则右树仍先完成，左树完成他的 (a - 2b - c)，此时最大并行时间是 b + c，即充分利用左树的并行时间，并将右树纳入并行。
+pub fn minimal_exec_time(root: Option<Rc<RefCell<TreeNode>>>) -> f64 {
+    fn helper(root: &Option<Rc<RefCell<TreeNode>>>) -> (f64, f64) {
+        match root {
+            None => (0.0, 0.0),
+            Some(node) => {
+                let node = node.borrow();
+                let (mut a, mut b) = helper(&node.left);
+                let (mut c, mut d) = helper(&node.right);
+                // 交换使左树总比右树大
+                if a < c {
+                    let mut t = a;
+                    a = c;
+                    c = t;
+                    t = b;
+                    b = d;
+                    d = t;
+                }
+                let total = node.val as f64 + a + c;
+                let paral = if (a - 2.0 * b) <= c { (a + c) / 2.0 } else { b + c };
+                return (total, paral);
+            }
+        }
+    }
+    let (total, paral) = helper(&root);
+    return total - paral;
+}
+
+
 fn main()
 {
     let tree = Some(Rc::new(RefCell::new(TreeNode::new(4))));
@@ -439,5 +478,6 @@ fn main()
     // build_tree([1,2,3].to_vec(), [2,3, 1].to_vec());
     // [4, 6, 7, 5]
     // verify_postorder([4,6,7,5].to_vec());
-    dbg!(invert_tree(tree));
+    // dbg!(invert_tree(tree));
+    dbg!(minimal_exec_time(tree));
 }
