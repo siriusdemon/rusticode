@@ -425,6 +425,21 @@ pub fn max_value(mut grid: Vec<Vec<i32>>) -> i32 {
     return grid[row-1][col-1];
 }
 
+
+// https://leetcode-cn.com/problems/triangle/solution/di-gui-ji-yi-hua-dp-bi-xu-miao-dong-by-sweetiee/
+pub fn minimum_total(triangle: Vec<Vec<i32>>) -> i32 {
+    let n = triangle.len();
+    let mut dp = vec![0; n+1];
+
+    for i in (0..n).rev() {
+        for j in 0..=i {
+            println!("i, j = {}, {}", i, j);
+            dp[j] = dp[j].min(dp[j+1]) + triangle[i][j];
+        }
+    }
+    return dp[0];
+}
+
 fn main()
 {
     // generate_parenthesis(4);
@@ -438,5 +453,12 @@ fn main()
     // max_profit([1,2,3].to_vec());
     // word_break("leetcode".to_string(), ["leet".to_string(), "code".to_string()].to_vec());
     // dbg!(find_length([1,2,3,2,1].to_vec(), [3,2,1,4,7].to_vec()));
-    dbg!(max_profit_cool([1,2,3,0,2].to_vec()));
+    // dbg!(max_profit_cool([1,2,3,0,2].to_vec()));
+    let tri = [
+        [2].to_vec(),
+        [3,4].to_vec(),
+        [6,5,7].to_vec(),
+        [4,1,8,3].to_vec()
+    ].to_vec();
+    dbg!(minimum_total(tri));
 }
