@@ -440,6 +440,23 @@ pub fn minimum_total(triangle: Vec<Vec<i32>>) -> i32 {
     return dp[0];
 }
 
+
+// https://leetcode-cn.com/problems/nge-tou-zi-de-dian-shu-lcof/solution/
+pub fn two_sum(n: i32) -> Vec<f64> {
+    let mut res = vec![1./6.;6];
+
+    for i in 1..n as usize {
+        let mut temp = vec![0.0; 5 * i + 6];
+        for j in 0..res.len() {
+            for k in 0..6 {
+                temp[j+k] += res[j] * 1.0/6.0;
+            }
+        }
+        res = temp;
+    }
+    return res;
+}
+
 fn main()
 {
     // generate_parenthesis(4);
@@ -454,11 +471,12 @@ fn main()
     // word_break("leetcode".to_string(), ["leet".to_string(), "code".to_string()].to_vec());
     // dbg!(find_length([1,2,3,2,1].to_vec(), [3,2,1,4,7].to_vec()));
     // dbg!(max_profit_cool([1,2,3,0,2].to_vec()));
-    let tri = [
-        [2].to_vec(),
-        [3,4].to_vec(),
-        [6,5,7].to_vec(),
-        [4,1,8,3].to_vec()
-    ].to_vec();
-    dbg!(minimum_total(tri));
+    // let tri = [
+    //     [2].to_vec(),
+    //     [3,4].to_vec(),
+    //     [6,5,7].to_vec(),
+    //     [4,1,8,3].to_vec()
+    // ].to_vec();
+    // dbg!(minimum_total(tri));
+    dbg!(two_sum(5));
 }
