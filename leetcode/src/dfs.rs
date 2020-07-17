@@ -13,3 +13,11 @@ pub fn translate_num(num: i32) -> i32 {
         return translate_num(num / 10);
     }
 }
+
+// https://leetcode-cn.com/problems/is-graph-bipartite/comments/
+// 邻接图，是否可二分
+pub fn is_bipartite(graph: Vec<Vec<i32>>) -> bool {
+    let n = graph.len();
+    // graph[i] 指向第 i 个节点，其值表示与 i 相连的点
+    true
+}
