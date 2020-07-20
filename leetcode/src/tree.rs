@@ -444,7 +444,29 @@ pub fn minimal_exec_time(root: Option<Rc<RefCell<TreeNode>>>) -> f64 {
         }
     }
     let (total, paral) = helper(&root);
-    return total - paral;
+    return total - paral; 
+}
+
+// https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/
+// 最大树径和
+use std::i32;
+pub fn max_path_sum(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
+    fn max_sum(root: &Option<Rc<RefCell<TreeNode>>>, maxsum: &mut i32) -> i32 {
+        match root {
+            None => 0,
+            Some(node) => {
+                let node = node.borrow();
+                let left = max_sum(&node.left, maxsum).max(0);
+                let right = max_sum(&node.right, maxsum).max(0);
+                let sum = node.val + left + right;
+                *maxsum = sum.max(*maxsum);
+                return node.val + left.max(right);
+            }
+        }
+    }    
+    let mut maxsum = i32::MIN;
+    max_sum(&root, &mut maxsum);
+    return maxsum;
 }
 
 
