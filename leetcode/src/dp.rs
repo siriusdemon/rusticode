@@ -457,6 +457,25 @@ pub fn two_sum(n: i32) -> Vec<f64> {
     return res;
 }
 
+// https://leetcode-cn.com/problems/minimum-path-sum/submissions/
+pub fn min_path_sum2(mut grid: Vec<Vec<i32>>) -> i32 {
+    let row = grid.len();
+    let col = grid[0].len();
+
+    for i in 1..row { 
+        grid[i][0] += grid[i-1][0];
+    }
+    for j in 1..col {
+        grid[0][j] += grid[0][j-1];
+    }
+    for i in 1..row {
+        for j in 1..col {
+            grid[i][j] = grid[i][j-1].min(grid[i-1][j]) + grid[i][j];
+        }
+    }
+    return grid[row-1][col-1];
+}
+
 fn main()
 {
     // generate_parenthesis(4);
@@ -478,5 +497,10 @@ fn main()
     //     [4,1,8,3].to_vec()
     // ].to_vec();
     // dbg!(minimum_total(tri));
-    dbg!(two_sum(5));
+    // dbg!(two_sum(5));
+    min_path_sum2([
+        [1,3,1].to_vec(),
+        [1,5,1].to_vec(),
+        [4,2,1].to_vec(),
+    ].to_vec());
 }
