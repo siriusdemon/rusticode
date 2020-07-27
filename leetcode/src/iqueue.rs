@@ -153,38 +153,49 @@ impl MaxQueue {
     }
 }
 
-/**
- * Your MaxQueue object will be instantiated and called as such:
- * let obj = MaxQueue::new();
- * let ret_1: i32 = obj.max_value();
- * obj.push_back(value);
- * let ret_3: i32 = obj.pop_front();
- */
+// https://leetcode-cn.com/problems/hua-dong-chuang-kou-de-zui-da-zhi-lcof/
+use std::collections::VecDeque;
+pub fn max_sliding_window(nums: Vec<i32>, k: i32) -> Vec<i32> {
+    let mut queue = VecDeque::new();
+    let mut res = Vec::new();
+
+    // init
+    queue.push_back(0);
+    for i in 1..k {
+        while nums[i] > queue.front().unwrap() {
+            queue.pop_front();
+        } 
+        queue.push_back(i);
+    }
+    res.push(nums[queue.front().unwrap()]);
+    res
+}
 
 fn main()
 {
-    let mut q = MyQueue::new();
-    println!("Init Queue {}", q.len());
-    println!("Empty Queue? {}", q.is_empty());
-    q.push_back(1314);
-    println!("len {}, top {}", q.len(), q.top());
-    q.push_back(520);
-    q.pop();
-    println!("len {}, top {}", q.len(), q.top());
-    q.push_back(666);
-    println!("len {}, top {}", q.len(), q.pop());
+    // let mut q = MyQueue::new();
+    // println!("Init Queue {}", q.len());
+    // println!("Empty Queue? {}", q.is_empty());
+    // q.push_back(1314);
+    // println!("len {}, top {}", q.len(), q.top());
+    // q.push_back(520);
+    // q.pop();
+    // println!("len {}, top {}", q.len(), q.top());
+    // q.push_back(666);
     // println!("len {}, top {}", q.len(), q.pop());
-    println!("true data len {}", q.data.len());
-    let mut p = q.squeeze();
-    println!("true data len {}", p.data.len());
+    // // println!("len {}, top {}", q.len(), q.pop());
     // println!("true data len {}", q.data.len());
-    let mut maxq = MaxQueue::new();
-    maxq.push_back(3);
-    maxq.push_back(31);
-    maxq.push_back(13);
-    maxq.pop_front();
-    maxq.pop_front();
-    maxq.pop_front();
-    maxq.pop_front();
+    // let mut p = q.squeeze();
+    // println!("true data len {}", p.data.len());
+    // // println!("true data len {}", q.data.len());
+    // let mut maxq = MaxQueue::new();
+    // maxq.push_back(3);
+    // maxq.push_back(31);
+    // maxq.push_back(13);
+    // maxq.pop_front();
+    // maxq.pop_front();
+    // maxq.pop_front();
+    // maxq.pop_front();
+
 }
 

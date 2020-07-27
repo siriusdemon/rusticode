@@ -337,6 +337,10 @@ pub fn compress_string(s: String) -> String {
 //     } 
 //     return res;
 // }
+// https://leetcode-cn.com/problems/is-subsequence/comments/
+pub fn is_subsequence(s: String, t: String) -> bool {
+    true
+}
 
 
 fn main()
