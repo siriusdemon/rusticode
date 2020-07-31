@@ -382,6 +382,21 @@ pub fn rotate2(matrix: &mut Vec<Vec<i32>>) {
     }
 }
 
+// https://leetcode-cn.com/problems/magic-index-lcci/submissions/
+pub fn find_magic_index(nums: Vec<i32>) -> i32 {
+    let mut i = 0;
+    while i < nums.len() {
+        if nums[i] == i as i32 {
+            return nums[i];
+        } else if nums[i] > i as i32 {
+            i = nums[i] as usize;
+        } else {
+            i += 1;
+        }
+    }
+    return -1;
+}
+
 fn main()
 {
     // dbg!(majority_element([1].to_vec()));
