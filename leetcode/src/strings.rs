@@ -342,6 +342,11 @@ pub fn is_subsequence(s: String, t: String) -> bool {
     true
 }
 
+// https://leetcode-cn.com/problems/repeated-substring-pattern/submissions/
+// 掐头去尾
+pub fn repeated_substring_pattern(s: String) -> bool {
+    true
+}
 
 fn main()
 {
