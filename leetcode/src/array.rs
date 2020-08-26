@@ -397,6 +397,63 @@ pub fn find_magic_index(nums: Vec<i32>) -> i32 {
     return -1;
 }
 
+// https://leetcode-cn.com/problems/zero-matrix-lcci/
+pub fn set_zeroes(matrix: &mut Vec<Vec<i32>>) {
+    fn set_row_zeros(matrix: &mut Vec<Vec<i32>>, nrow: usize, col: usize) {
+        for j in 0..col {
+            matrix[nrow][j] = 0;
+        }
+    }
+    fn set_col_zeros(matrix: &mut Vec<Vec<i32>>, ncol: usize, row: usize) {
+        for i in 0..row {
+            matrix[i][ncol] = 0;
+        }
+    }
+    let row = matrix.len();
+    let col = matrix[0].len();
+    // first row 
+    let mut row0 = 1;
+    let mut col0 = 1;
+    for i in 0..col {
+        if matrix[0][i] == 0 {
+            row0 = 0;
+            break;
+        }
+    }
+    for i in 0..row {
+        if matrix[i][0] == 0 {
+            col0 = 0;
+            break;
+        }
+    }
+    // record other row and column
+    for i in 1..row {
+        for j in 1..col {
+            if matrix[i][j] == 0 {
+                matrix[i][0] = 0;
+                matrix[0][j] = 0;
+            }
+        }
+    }
+    // handle row and column except the 1st
+    for i in 1..row {
+        if matrix[i][0] == 0 {
+            set_row_zeros(matrix, i, col);
+        }
+    } 
+    for j in 1..col {
+        if matrix[0][j] == 0 {
+            set_col_zeros(matrix, j, row);
+        }
+    }
+    if row0 == 0 {
+        set_row_zeros(matrix, 0, col);
+    }
+    if col0 == 0 {
+        set_col_zeros(matrix, 0, row)
+    }
+}
+
 fn main()
 {
     // dbg!(majority_element([1].to_vec()));
@@ -420,9 +477,10 @@ fn main()
     // dbg!(is_straight([0,0,2,2,5].to_vec()));
     // three_sum_closest([3,4,5,6,7,2,3,4,5,7].to_vec(), 3);
     let mut matrix = vec![
-        [1,2,3].to_vec(),
+        [1,2,0].to_vec(),
         [4,5,6].to_vec(),
         [7,8,9].to_vec(),
     ];
-    rotate2(&mut matrix);
+    set_zeroes(&mut matrix);
+    println!("{:?}", matrix);
 }
