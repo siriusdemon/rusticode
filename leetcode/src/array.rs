@@ -1,3 +1,15 @@
+// https://leetcode-cn.com/problems/missing-number-lcci/
+// ???
+pub fn missing_number2(mut nums: Vec<i32>) -> i32 {
+    let n = nums.len() as i32;
+    let mut expect_sum = n * (n + 1) / 2;
+    for i in nums {
+        expect_sum -= i;
+    }
+    return expect_sum;
+}
+
+
 // https://leetcode-cn.com/problems/merge-sorted-array/
 
 pub fn merge(nums1: &mut Vec<i32>, m: i32, nums2: &mut Vec<i32>, n: i32) {
@@ -476,11 +488,12 @@ fn main()
     // dbg!(is_straight([1,2,3,4,6].to_vec()));
     // dbg!(is_straight([0,0,2,2,5].to_vec()));
     // three_sum_closest([3,4,5,6,7,2,3,4,5,7].to_vec(), 3);
-    let mut matrix = vec![
-        [1,2,0].to_vec(),
-        [4,5,6].to_vec(),
-        [7,8,9].to_vec(),
-    ];
-    set_zeroes(&mut matrix);
-    println!("{:?}", matrix);
+    // let mut matrix = vec![
+    //     [1,2,0].to_vec(),
+    //     [4,5,6].to_vec(),
+    //     [7,8,9].to_vec(),
+    // ];
+    // set_zeroes(&mut matrix);
+    // println!("{:?}", matrix);
+    missing_number2([9,6,4,2,3,5,7,0,1].to_vec());
 }
