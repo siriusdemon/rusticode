@@ -470,6 +470,9 @@ pub fn max_path_sum(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
 }
 
 
+// https://leetcode-cn.com/problems/binary-tree-paths/
+// 根到叶子的所有路径
+
 fn main()
 {
     let tree = Some(Rc::new(RefCell::new(TreeNode::new(4))));
