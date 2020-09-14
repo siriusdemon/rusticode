@@ -469,6 +469,27 @@ pub fn max_path_sum(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
     return maxsum;
 }
 
+// https://leetcode-cn.com/problems/binary-tree-inorder-traversal/
+pub fn inorder_traversal(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
+    fn helper(root: Option<Rc<RefCell<TreeNode>>>, res: &mut Vec<i32>) {
+        match root {
+            None => (),
+            Some(node) => {
+                let mut node = node.borrow_mut();
+                let left = node.left.take();
+                let right = node.right.take();
+                helper(left, res);
+                res.push(node.val);
+                helper(right, res)
+            }
+        }
+    }
+    let mut res = vec![];
+    helper(root, &mut res);
+    return res;
+}
+
+
 
 // https://leetcode-cn.com/problems/binary-tree-paths/
 // 根到叶子的所有路径
@@ -504,5 +525,7 @@ fn main()
     // [4, 6, 7, 5]
     // verify_postorder([4,6,7,5].to_vec());
     // dbg!(invert_tree(tree));
-    dbg!(minimal_exec_time(tree));
+    // dbg!(minimal_exec_time(tree));
+    let res = inorder_traversal(tree);
+    println!("{:?}", res);
 }
