@@ -492,6 +492,29 @@ pub fn inorder_traversal(root: Option<Rc<RefCell<TreeNode>>>) -> Vec<i32> {
 // https://leetcode-cn.com/problems/first-common-ancestor-lcci/
 
 
+// https://leetcode-cn.com/problems/convert-bst-to-greater-tree/
+pub fn convert_bst(mut root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell<TreeNode>>> {
+    fn helper(mut root: Option<Rc<RefCell<TreeNode>>>, sum: &mut i32) -> Option<Rc<RefCell<TreeNode>>> {
+        match root {
+            None => None,
+            Some(node) => {
+                {
+                    let mut node = node.borrow_mut();
+                    let right = node.right.take();
+                    node.right = helper(right, sum);
+
+                    node.val += *sum;
+                    *sum = node.val;
+
+                    let left = node.left.take();
+                    node.left = helper(left, sum);
+                }
+                return Some(node);
+           }
+        }
+    }    
+    return helper(root, &mut 0);
+}
 
 // https://leetcode-cn.com/problems/binary-tree-paths/
 // 根到叶子的所有路径
