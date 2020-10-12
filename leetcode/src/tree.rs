@@ -519,6 +519,12 @@ pub fn convert_bst(mut root: Option<Rc<RefCell<TreeNode>>>) -> Option<Rc<RefCell
 // https://leetcode-cn.com/problems/binary-tree-paths/
 // 根到叶子的所有路径
 
+// https://leetcode-cn.com/problems/minimum-absolute-difference-in-bst/
+// 二叉搜索树的最小绝对值
+pub fn get_minimum_difference(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
+    return -1;
+}
+
 fn main()
 {
     let tree = Some(Rc::new(RefCell::new(TreeNode::new(4))));
