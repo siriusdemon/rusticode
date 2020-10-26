@@ -161,13 +161,13 @@ pub fn max_sliding_window(nums: Vec<i32>, k: i32) -> Vec<i32> {
 
     // init
     queue.push_back(0);
-    for i in 1..k {
-        while nums[i] > queue.front().unwrap() {
+    for i in 1..k as usize {
+        while nums[i] > *queue.front().unwrap() {
             queue.pop_front();
         } 
-        queue.push_back(i);
+        queue.push_back(i as usize);
     }
-    res.push(nums[queue.front().unwrap()]);
+    res.push(nums[*queue.front().unwrap()]);
     res
 }
 
